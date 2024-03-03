@@ -31,11 +31,31 @@
     THIS SOFTWARE.
 */
 #include "mcc_generated_files/system/system.h"
+#include "mcc_generated_files/eeprom-lib/eeprom.h"
 
 
 void TMR0_Callback(void)
 {
     IO_RC7_Toggle();
+}
+
+// fatal error types
+typedef enum {
+    ERR_OK = 0,
+    ERR_EEPROM_WRITE = 1,
+    ERR_EEPROM_READ = 2,
+    ERR_EEPROM_VERIFY_FAILED = 3,
+} t_error;
+
+// for debugger
+t_error gErrorCode = ERR_OK;
+
+void my_fatal_error(t_error err){
+    gErrorCode = err;
+    IO_RB7_SetLow(); // RED LED On
+    while(1){
+        NOP(); // put breakpoint here to catch fatal errors
+    }
 }
 
 /*
@@ -44,6 +64,10 @@ void TMR0_Callback(void)
 
 int main(void)
 {
+    uint32_t WR_ADDRESS = 0;
+    uint8_t  WR_DATA = 0x12, TEMP_DATA=0;
+    uint32_t addr;
+    
     SYSTEM_Initialize();
 
     TMR0_OverflowCallbackRegister(TMR0_Callback);
@@ -56,9 +80,27 @@ int main(void)
     // Enable the Peripheral Interrupts 
     INTERRUPT_PeripheralInterruptEnable();
 
+    if (!EEPROM_ByteWrite(WR_ADDRESS,&WR_DATA)){
+        my_fatal_error(ERR_EEPROM_WRITE);
+    }
+
+    if (!EEPROM_ByteRead(WR_ADDRESS,&TEMP_DATA)){
+        my_fatal_error(ERR_EEPROM_READ);
+    }
+    
+    if (TEMP_DATA != WR_DATA){
+        my_fatal_error(ERR_EEPROM_VERIFY_FAILED);        
+    }
+    
     while(1)
     {
-        __delay_ms(500);
-        IO_RB7_Toggle();
+        for(addr=0;addr<EEPROM_I2C_SIZE;addr++)
+        {
+            if (!EEPROM_ByteRead(addr,&TEMP_DATA)){
+                my_fatal_error(ERR_EEPROM_READ);
+            }            
+            __delay_ms(500);
+            IO_RB7_Toggle();            
+        }
     }    
 }

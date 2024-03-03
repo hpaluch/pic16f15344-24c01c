@@ -3,6 +3,11 @@
 Goal: Test I2C communication of PIC16F15344 and I2C EEPROM 24C01C.
 
 Status:
+- UNSTABLE: Using I2C and EEPROM components, but EEPROM components is incompatible
+  with current I2C component - I created monkey patch header
+  - `pic16f15344-24c01c.X/mcc_generated_files/i2c_host/i2c.h`
+  and also patched Interface variable name in
+  - `pic16f15344-24c01c.X/mcc_generated_files/eeprom-lib/src/eeprom_i2c.c`
 - blinking LED on PIN10 RB7 using polling in `main()` loop.
 - blinking LED on PIN9 RC7 using TMR0 Interrupt
 
@@ -18,7 +23,21 @@ Additional parts (not included with PICDEM):
   regulator.
   - ensure that output from LM317 regulator is exactly 5V.
 - [PIC16F15344][PIC16F15344] PDIP20 package
+[ [24C01C][24C01C] I2C EEPROM 1Kbit (128 bytes) 5V (!!!), PDIP8 package
 - LED and 470 Ohm resistor connected to PIN10 RB7
+- LED and 470 Ohm resistor connected to PIN9 RB6
+
+EEPROM Wiring:
+
+| PIC pin | EEPROM pin | Description |
+| --- | --- | --- |
+| 16 | 6 | I2C SCL, RC0 |
+| 15 | 5 | I2C SDA, RC1 |
+
+- EEPROM pull-ups: 4k7 on pin 6 (SCL) and pin 5 (SDA)
+- EEPROM GND: pin 1 (A0), pin 2 (A1), pin3 (A2), pin4 (Vss)
+- EEPROM +5V: pin 8
+
 
 # Software Requirements
 
@@ -34,4 +53,4 @@ for Software details.
 [MPLAB X IDE]: https://www.microchip.com/mplab/mplab-x-ide
 [DM163045]: https://www.microchip.com/en-us/development-tool/dm163045 
 [PIC16F15344]: https://www.microchip.com/en-us/product/PIC16F15344
-
+[24C01C]: https://www.microchip.com/en-us/product/24c01c

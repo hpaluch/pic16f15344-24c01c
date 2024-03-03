@@ -1,14 +1,14 @@
 /**
- * CLOCK Generated Driver Source File
- * 
- * @file clock.c
- * 
- * @ingroup clockdriver 
- * 
- * @brief This file contains the API prototypes for the Clock driver.
+ * I2C Generated Driver Types Header File
  *
- * @version Driver Version 2.0.3
-*/
+ * @file i2c_host_types.h
+ *
+ * @ingroup i2c_host_interface
+ *
+ * @brief This file contains additional data types for the I2C module.
+ *
+ * @version I2C Driver Version 2.1.0
+ */
 
 /*
 © [2024] Microchip Technology Inc. and its subsidiaries.
@@ -31,24 +31,30 @@
     THIS SOFTWARE.
 */
 
-#include <xc.h>
-#include "../clock.h"
+#ifndef I2C_HOST_TYPES_H
+#define	I2C_HOST_TYPES_H
 
-void CLOCK_Initialize(void)
-{
-    // Set the CLOCK CONTROL module to the options selected in the user interface.
-    //NDIV 1; NOSC HFINTOSC; 
-    OSCCON1 = 0x60;
-    //CSWHOLD may proceed; 
-    OSCCON3 = 0x0;
-    //EXTOEN disabled; HFOEN disabled; MFOEN disabled; LFOEN disabled; ADOEN disabled; 
-    OSCEN = 0x0;
-    //HFFRQ 32_MHz; 
-    OSCFRQ = 0x6;
-    //TUN undefined; 
-    OSCTUNE = 0x0;
-
-}
 /**
- End of File
-*/
+ * @ingroup i2c_host_interface
+ * @enum  i2c_host_error_t
+ * @brief Enumeration for the I2C errors
+ */
+typedef enum
+{
+    I2C_ERROR_NONE,             /**< No error */
+    I2C_ERROR_ADDR_NACK,        /**< Client returned address NACK */
+    I2C_ERROR_DATA_NACK,        /**< Client returned data NACK */
+    I2C_ERROR_BUS_COLLISION,    /**< Bus Collision error */
+} i2c_host_error_t;
+
+/**
+ * @ingroup i2c_host_interface
+ * @struct i2c_host_transfer_setup_t
+ * @brief Structure for the I2C clock change
+ */
+typedef struct
+{
+  uint32_t clkSpeed;            /**< I2C Clock Speed */
+} i2c_host_transfer_setup_t;
+
+#endif // end of I2C_HOST_TYPES_H
