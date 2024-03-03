@@ -17,8 +17,8 @@ Additional parts (not included with PICDEM):
 - Power supply 9V (or 9V battery) to power PICDEM board and its LM317 Voltage
   regulator.
   - ensure that output from LM317 regulator is exactly 5V.
-- [PIC16F15344][PIC16F15344]
-- LED and 470 Ohm resistor connected to RB7
+- [PIC16F15344][PIC16F15344] PDIP20 package
+- LED and 470 Ohm resistor connected to PIN10 RB7
 
 # Software Requirements
 
@@ -27,6 +27,8 @@ Additional parts (not included with PICDEM):
 * Device Family Pack `PIC12-16F1xxx_DFP` v1.24.387
 * MCC Melody Tool 
 
+Please see [pic16f15344-24c01c.X/mcc-manifest-generated-success.yml](https://github.com/hpaluch/pic16f15344-24c01c/blob/master/pic16f15344-24c01c.X/mcc-manifest-generated-success.yml)
+for Software details.
 
 [XC compilers]: https://www.microchip.com/mplab/compilers
 [MPLAB X IDE]: https://www.microchip.com/mplab/mplab-x-ide
