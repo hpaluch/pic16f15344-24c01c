@@ -67,9 +67,13 @@ int main(void)
     uint32_t WR_ADDRESS = 0;
     uint8_t  WR_DATA = 0x12, TEMP_DATA=0;
     uint32_t addr;
+    bool res;
     
     SYSTEM_Initialize();
-
+    IO_RB7_SetHigh();
+    IO_RC7_SetHigh();
+    
+    
     TMR0_OverflowCallbackRegister(TMR0_Callback);
 
     // If using interrupts in PIC Mid-Range Compatibility Mode you need to enable the Global and Peripheral Interrupts 
@@ -80,23 +84,33 @@ int main(void)
     // Enable the Peripheral Interrupts 
     INTERRUPT_PeripheralInterruptEnable();
 
-    if (!EEPROM_ByteWrite(WR_ADDRESS,&WR_DATA)){
+    __delay_ms(1000);
+#if 0    
+    res = EEPROM_ByteWrite(WR_ADDRESS,&WR_DATA);
+    NOP();
+    if (!res){
         my_fatal_error(ERR_EEPROM_WRITE);
     }
+#endif
 
-    if (!EEPROM_ByteRead(WR_ADDRESS,&TEMP_DATA)){
+    res = EEPROM_ByteRead(WR_ADDRESS,&TEMP_DATA);
+    NOP();
+    if (!res){
         my_fatal_error(ERR_EEPROM_READ);
     }
-    
+#if 0        
     if (TEMP_DATA != WR_DATA){
         my_fatal_error(ERR_EEPROM_VERIFY_FAILED);        
     }
+#endif
     
     while(1)
     {
         for(addr=0;addr<EEPROM_I2C_SIZE;addr++)
         {
-            if (!EEPROM_ByteRead(addr,&TEMP_DATA)){
+            res = EEPROM_ByteRead(addr,&TEMP_DATA);
+            NOP();
+            if (!res){
                 my_fatal_error(ERR_EEPROM_READ);
             }            
             __delay_ms(500);

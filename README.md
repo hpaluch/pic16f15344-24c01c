@@ -49,6 +49,21 @@ EEPROM Wiring:
 Please see [pic16f15344-24c01c.X/mcc-manifest-generated-success.yml](https://github.com/hpaluch/pic16f15344-24c01c/blob/master/pic16f15344-24c01c.X/mcc-manifest-generated-success.yml)
 for Software details.
 
+# Notes
+
+MCC Melody is too simple to properly setup I2C Pins:
+- has to manually set "Open Drain"
+- has to disable "slew control" (there are various HW bugs in PIC when slow rate control
+  is enabled)
+
+According to datasheet, 24C01C requires for logical 1 value `0.7 * Vcc` which is `3.5V` for
+Vcc=5V. One must be careful to avoid clamping of I2C signals to 3.3V logic (see below).
+
+Important Digilent Analog Discovery 2 note:
+- Do NOT connect I2C pins to Digilent Digital pins (D0 to D15)! 
+- they will clamp I2C levels to `LVCMOS (3.3V max)` and will basically kill proper
+  I2C communication (EEPROM will never ACK communication on I2C bus)
+
 [XC compilers]: https://www.microchip.com/mplab/compilers
 [MPLAB X IDE]: https://www.microchip.com/mplab/mplab-x-ide
 [DM163045]: https://www.microchip.com/en-us/development-tool/dm163045 

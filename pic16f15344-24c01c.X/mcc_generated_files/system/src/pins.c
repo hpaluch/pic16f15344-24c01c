@@ -71,19 +71,19 @@ void PIN_MANAGER_Initialize(void)
    
     ODCONA = 0x0;
     ODCONB = 0x0;
-    ODCONC = 0x0;
+    ODCONC = 0x3;
     /**
     SLRCONx registers
     */
     SLRCONA = 0x37;
-    SLRCONB = 0xF0;
-    SLRCONC = 0xFF;
+    SLRCONB = 0x70;
+    SLRCONC = 0x7C;
     /**
     INLVLx registers
     */
     INLVLA = 0x3F;
-    INLVLB = 0xF0;
-    INLVLC = 0xFF;
+    INLVLB = 0x70;
+    INLVLC = 0x7C;
 
     /**
     PPS registers
