@@ -32,6 +32,12 @@
 */
 #include "mcc_generated_files/system/system.h"
 
+
+void TMR0_Callback(void)
+{
+    IO_RC7_Toggle();
+}
+
 /*
     Main application
 */
@@ -40,21 +46,15 @@ int main(void)
 {
     SYSTEM_Initialize();
 
-    // If using interrupts in PIC18 High/Low Priority Mode you need to enable the Global High and Low Interrupts 
+    TMR0_OverflowCallbackRegister(TMR0_Callback);
+
     // If using interrupts in PIC Mid-Range Compatibility Mode you need to enable the Global and Peripheral Interrupts 
     // Use the following macros to: 
-
     // Enable the Global Interrupts 
-    //INTERRUPT_GlobalInterruptEnable(); 
-
-    // Disable the Global Interrupts 
-    //INTERRUPT_GlobalInterruptDisable(); 
+    INTERRUPT_GlobalInterruptEnable();
 
     // Enable the Peripheral Interrupts 
-    //INTERRUPT_PeripheralInterruptEnable(); 
-
-    // Disable the Peripheral Interrupts 
-    //INTERRUPT_PeripheralInterruptDisable(); 
+    INTERRUPT_PeripheralInterruptEnable();
 
     while(1)
     {

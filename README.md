@@ -2,9 +2,9 @@
 
 Goal: Test I2C communication of PIC16F15344 and I2C EEPROM 24C01C.
 
-
 Status:
-- just blinking LED on RB7 using polling.
+- blinking LED on PIN10 RB7 using polling in `main()` loop.
+- blinking LED on PIN9 RC7 using TMR0 Interrupt
 
 # Hardware
 
