@@ -2,6 +2,9 @@
 
 Goal: Test I2C communication of PIC16F15344 and I2C EEPROM 24C01C.
 
+WARNING! This circuit does not do anything useful on its own. It is designed
+to use Debugger and Scope/Analyzer to see I2C communication in various stages.
+
 Status:
 - UNSTABLE: Using I2C and EEPROM components, but EEPROM components is incompatible
   with current I2C component - I created monkey patch header
@@ -23,20 +26,17 @@ Additional parts (not included with PICDEM):
   regulator.
   - ensure that output from LM317 regulator is exactly 5V.
 - [PIC16F15344][PIC16F15344] PDIP20 package
-[ [24C01C][24C01C] I2C EEPROM 1Kbit (128 bytes) 5V (!!!), PDIP8 package
+- [24C01C][24C01C] I2C EEPROM 1Kbit (128 bytes) 5V (!!!), PDIP8 package
 - LED and 470 Ohm resistor connected to PIN10 RB7
 - LED and 470 Ohm resistor connected to PIN9 RB6
 
-EEPROM Wiring:
+Scope and/or analyzer:
+- [Digilent Analog Discovery 2][Digilent Analog Discovery 2]
+- but see important note at the end of this README, regarding Digital Inputs(!)
 
-| PIC pin | EEPROM pin | Description |
-| --- | --- | --- |
-| 16 | 6 | I2C SCL, RC0 |
-| 15 | 5 | I2C SDA, RC1 |
+Please see schematics below for details:
 
-- EEPROM pull-ups: 4k7 on pin 6 (SCL) and pin 5 (SDA)
-- EEPROM GND: pin 1 (A0), pin 2 (A1), pin3 (A2), pin4 (Vss)
-- EEPROM +5V: pin 8
+![PICDEM with 24C01C](ExpressPCB/pic16f-24c01c.png)
 
 
 # Software Requirements
@@ -51,10 +51,13 @@ for Software details.
 
 # Notes
 
-MCC Melody is too simple to properly setup I2C Pins:
-- has to manually set "Open Drain"
-- has to disable "slew control" (there are various HW bugs in PIC when slow rate control
-  is enabled)
+> This section below is in progress - probably not needed:
+> 
+> MCC Melody is too simple to properly setup I2C Pins:
+> 
+> - has to manually set "Open Drain"
+> - has to disable "slew control" (there are various HW bugs in PIC when slow rate control
+>   is enabled)
 
 According to datasheet, 24C01C requires for logical 1 value `0.7 * Vcc` which is `3.5V` for
 Vcc=5V. One must be careful to avoid clamping of I2C signals to 3.3V logic (see below).
@@ -69,3 +72,5 @@ Important Digilent Analog Discovery 2 note:
 [DM163045]: https://www.microchip.com/en-us/development-tool/dm163045 
 [PIC16F15344]: https://www.microchip.com/en-us/product/PIC16F15344
 [24C01C]: https://www.microchip.com/en-us/product/24c01c
+[Digilent Analog Discovery 2]: https://store.digilentinc.com/analog-discovery-2-100msps-usb-oscilloscope-logic-analyzer-and-variable-power-supply/
+
