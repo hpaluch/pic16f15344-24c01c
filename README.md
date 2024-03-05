@@ -38,13 +38,16 @@ Please see schematics below for details:
 
 ![PICDEM with 24C01C](ExpressPCB/pic16f-24c01c.png)
 
+All schema files are in [ExpressPCB/](ExpressPCB/) folder.  Made
+in [ExpressPCB Classic][ExpressPCB Classic].
+
 
 # Software Requirements
 
 * [XC8 compiler][XC compilers] - tested version v2.46 (Mar 2024)
 * [MPLAB X IDE][MPLAB X IDE] - tested version v6.20 (Mar 2024)
 * Device Family Pack `PIC12-16F1xxx_DFP` v1.24.387
-* MCC Melody Tool 
+* MCC Melody Tool
 
 Please see [pic16f15344-24c01c.X/mcc-manifest-generated-success.yml](https://github.com/hpaluch/pic16f15344-24c01c/blob/master/pic16f15344-24c01c.X/mcc-manifest-generated-success.yml)
 for Software details.
@@ -73,4 +76,5 @@ Important Digilent Analog Discovery 2 note:
 [PIC16F15344]: https://www.microchip.com/en-us/product/PIC16F15344
 [24C01C]: https://www.microchip.com/en-us/product/24c01c
 [Digilent Analog Discovery 2]: https://store.digilentinc.com/analog-discovery-2-100msps-usb-oscilloscope-logic-analyzer-and-variable-power-supply/
+[ExpressPCB Classic]: https://www.expresspcb.com/expresspcb-classic-pcb-layout-software/
 
